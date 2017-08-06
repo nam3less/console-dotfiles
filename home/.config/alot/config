@@ -1,0 +1,8 @@
+[accounts]
+    [[gmail]]
+        realname = Robin Marcus Beckmann
+        address = robin.m.beckmann@gmail.com
+        sendmail_command = msmtp --account=gmail
+        sent_box =
+        drafts_box =
+

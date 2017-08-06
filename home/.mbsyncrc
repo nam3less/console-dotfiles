@@ -1,0 +1,85 @@
+IMAPAccount robin.m.beckmann@gmail.com
+Host imap.gmail.com
+User robin.m.beckmann@gmail.com
+PassCmd "pass show mail/robin.m.beckmann@gmail.com"
+# Use SSL
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore gmail-remote
+Account robin.m.beckmann@gmail.com
+
+MaildirStore gmail-local
+Path ~/mail/gmail/
+Inbox ~/mail/gmail/inbox
+
+
+# Configure every [Gmail]/* directory as a seperate
+# Channel to get rid of the [Gmail].
+Channel gmail-inbox
+Master :gmail-remote:"INBOX"
+Slave :gmail-local:inbox
+#Create directories if they don't exists
+Create Both
+
+Channel gmail-drafts
+Master :gmail-remote:"[Gmail]/Drafts"
+Slave :gmail-local:drafts
+#Create directories if they don't exists
+Create Both
+
+Channel gmail-starred
+Master :gmail-remote:"[Gmail]/Starred"
+Slave :gmail-local:starred
+#Create directories if they don't exists
+Create Both
+
+Channel gmail-important
+Master :gmail-remote:"[Gmail]/Important"
+Slave :gmail-local:important
+#Create directories if they don't exists
+Create Both
+
+Channel gmail-spam
+Master :gmail-remote:"[Gmail]/Spam"
+Slave :gmail-local:spam
+#Create directories if they don't exists
+Create Both
+
+Channel gmail-trash
+Master :gmail-remote:"[Gmail]/Trash"
+Slave :gmail-local:trash
+#Create directories if they don't exists
+Create Both
+
+Channel gmail-sent
+Master :gmail-remote:"[Gmail]/Sent Mail"
+Slave :gmail-local:sent
+#Create directories if they don't exists
+Create Both
+
+Channel gmail-all-mail
+Master :gmail-remote:"[Gmail]/All Mail"
+Slave :gmail-local:all_mails
+#Create directories if they don't exists
+Create Both
+
+Channel gmail-default
+Master :gmail-remote:
+Slave :gmail-local:
+Patterns * ![Gmail]* !INBOX
+#Create directories if they don't exists
+Create Both
+
+
+Group gmail
+Channel gmail-inbox
+Channel gmail-drafts
+Channel gmail-starred
+Channel gmail-important
+Channel gmail-spam
+Channel gmail-trash
+Channel gmail-sent
+Channel gmail-all-mail
+Channel gmail-default
+

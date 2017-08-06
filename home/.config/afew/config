@@ -1,0 +1,12 @@
+[global]
+
+# Filter chain
+[SpamFilter]
+[KillThreadsFilter]
+[ListMailsFilter]
+[FolderNameFilter]
+[Filter.1]
+message = Tagging all mails sent directly to me
+query = to:r.beckmann@thought-out-loud.com or to:r.m.beckmann@outlook.com or to:robin.m.beckmann@gmail.com
+tags = +to-me
+[InboxFilter]
