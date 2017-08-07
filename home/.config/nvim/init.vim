@@ -34,17 +34,19 @@ Plug 'tpope/vim-vinegar'
 " Editing candy
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'jiangmiao/auto-pairs'
 
 " PLEASE let me type less
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'mattn/emmet-vim'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'algotech/ultisnips-php'
 
 " Autocompletion providers for deoplete
 Plug 'pbogut/deoplete-elm'
-Plug 'php-vim/phpcd.vim'
+Plug 'padawan-php/deoplete-padawan', {'do': 'composer install'}
 Plug 'zchee/deoplete-zsh'
 Plug 'Shougo/neco-vim'
 Plug 'mhartington/nvim-typescript'
@@ -77,8 +79,9 @@ set noruler
 set noshowmode
 set number
 set relativenumber
+set smartindent
 set smarttab
-set termguicolors
+"set termguicolors
 
 set clipboard=unnamed
 set cmdheight=2
@@ -87,11 +90,16 @@ set listchars=trail:·,tab:▸\ ,eol:¬
 set tabstop=4
 set viminfo^=%
 
+" Folding
+set foldmethod=syntax
+let php_folding = 1
+
 " Colorize vim nicely
 colorscheme gruvbox
 " Get gruvbox to look nicer
 set background=dark
 let g:gruvbox_contrast_dark = "hard"
+let g:gruvbox_italic = 1
 
 " Let me keep my beautiful transparent background
 hi Normal guibg=NONE ctermbg=NONE
@@ -118,8 +126,26 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#fnamemod = ":t"
 
+" Deoplete configuration
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_refresh_always = 1
+call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
+
+" Configure ale linters
+let g:ale_javascript_standard_executable = 'semistandard'
+
+" UltiSnips triggering
+let g:UltiSnipsExpandTrigger = '<C-j>'
+let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+
+" fzf configuration
 let g:fzf_layout = { 'down': '~40%' }
 
+" Custom functions
+if !exists(':BufferClean')
+    command BufferClean :w | %bd | e#
+endif
 
 " set the leader character
 let mapleader = "ö"
@@ -139,6 +165,14 @@ nnoremap <leader>sv :source ~/.config/nvim/init.vim<CR>
 nnoremap <leader>ev :e ~/.config/nvim/init.vim<CR>
 
 " buffer operations
-nnoremap <leader>bn :bnext<CR>
-nnoremap <leader>bp :bprevious<CR>
-nnoremap <leader>bl :e#<CR>
+nnoremap <leader>bc :BufferClean<CR>
+nnoremap <leader>j :bnext<CR>
+nnoremap <leader>k :bprevious<CR>
+nnoremap <leader>l :e#<CR>
+
+nnoremap <leader>wk <Plug>(ale_previous_wrap)
+nnoremap <leader>wj <Plug>(ale_next_wrap)
+
+" Insert mode maps
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<tab>"
