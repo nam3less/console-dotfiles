@@ -10,6 +10,9 @@ fi
 source ~/.zplug/init.zsh
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 
+TERMINAL=st
+export $TERMINAL
+
 # Let zplug manage itself
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 

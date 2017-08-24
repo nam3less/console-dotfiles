@@ -6,7 +6,7 @@ let g:plug_download_url  = "https://raw.githubusercontent.com/junegunn/vim-plug/
 
 " If plug isn't installed, install it
 if !filereadable(expand(g:plug_autoload_path))
-    silent exec "curl -fLo " . fnameescape(g:plug_autoload_path) . " --create-dirs " . g:plug_download_url
+    silent exec "!curl -fLo " . fnameescape(g:plug_autoload_path) . " --create-dirs " . g:plug_download_url
     silent exec "so " . fnameescape(g:plug_autoload_path)
 endif
 
@@ -17,6 +17,8 @@ call plug#begin("~/.config/nvim/plugged")
 Plug 'editorconfig/editorconfig-vim'
 
 " Eyecandy
+" Plug 'itchyny/lightline.vim'
+" Plug 'mgee/lightline-bufferline'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -35,6 +37,7 @@ Plug 'tpope/vim-vinegar'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'tomtom/tcomment.vim'
 Plug 'jiangmiao/auto-pairs'
 
 " PLEASE let me type less
@@ -81,7 +84,7 @@ set number
 set relativenumber
 set smartindent
 set smarttab
-"set termguicolors
+" set termguicolors
 
 set clipboard=unnamed
 set cmdheight=2
