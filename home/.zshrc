@@ -7,8 +7,7 @@ if [[ ! -a ~/.zplug ]]; then
         | zsh
 fi
 
-source ~/.zplug/init.zsh
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+source ~/.profile
 
 # Let zplug manage itself
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
@@ -40,7 +39,22 @@ SPACESHIP_TIME_SHOW=true
 alias k='k -A -h'
 alias mmv='noglob zmv -W'
 
-export TERMINAL=termite
+# Navigation
+alias "..=cd .."
+alias "ll=ls -l"
+alias "lm=ls -Al"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+alias "gits=git status"
+
+# PHP shit
+alias "artisan=php artisan"
+alias "phpunit=php vendor/bin/phpunit"
+
+# Mac shit
+alias "remDS=find ./ -name \".DS_Store\" -depth -exec rm {} \; -print"
+alias "vim=mvim -v"
+
+# export TERMINAL=termite
+
+export LC_ALL=en_US.UTF-8
 
