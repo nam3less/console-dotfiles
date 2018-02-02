@@ -52,6 +52,7 @@ Plug 'algotech/ultisnips-php'
 
 " Autocompletion providers for deoplete
 Plug 'lvht/phpcd.vim', {'for': 'php', 'do': 'composer install'}
+Plug 'pbogut/deoplete-elm'
 Plug 'Shougo/neco-vim'
 Plug 'carlitux/deoplete-ternjs'
 
@@ -95,7 +96,7 @@ set relativenumber
 set smartcase
 set smartindent
 set smarttab
-set termguicolors
+"set termguicolors
 
 set clipboard=unnamed
 set colorcolumn=80
@@ -113,6 +114,10 @@ set expandtab
 set foldmethod=syntax
 let php_folding = 1
 
+=======
+set foldmethod=syntax
+let php_folding=1
+
 " Get gruvbox to look nicer
 set background=dark
 let g:gruvbox_contrast_dark = "hard"
@@ -123,7 +128,6 @@ let g:nord_italic_comments = 1
 let g:nord_comment_brightness = 14
 
 colorscheme nord
-
 
 " Let me keep my beautiful transparent background
 " hi Normal guibg=NONE ctermbg=NONE
@@ -166,6 +170,11 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 let g:UltiSnipsSnippetDirectories = ["UltiSnips", "my-snippets"]
 
 let g:org_agenda_files = ["~/org/General.org", "~/org/EMAF.org"]
+
+" Ultisnips keybinds
+let g:UltiSnipsExpandTrigger = '<C-j>'
+let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k'
 
 " fzf configuration
 let g:fzf_layout = { 'down': '~30%' }
@@ -211,7 +220,6 @@ let maplocalleader = "\\"
 
 " Normal mode remaps
 nnoremap <C-L> :nohl<CR><C-L>
-nnoremap <C-p> :Files<CR>
 
 " fzf command mappings
 " mnemonic find
@@ -231,8 +239,8 @@ nnoremap <leader>k :bprevious<CR>
 nnoremap <leader>l :e#<CR>
 
 nnoremap <leader>tq :tabclose<CR>
-nnoremap <leader>tl :tabnext<CR>
-nnoremap <leader>th :tabprevious<CR>
+nnoremap <leader>tj :tabnext<CR>
+nnoremap <leader>tk :tabprevious<CR>
 
 nnoremap <leader>cs :pclose<CR>
 
@@ -245,4 +253,3 @@ tnoremap <Esc> <C-\><C-n>
 " Insert mode maps
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<tab>"
-
