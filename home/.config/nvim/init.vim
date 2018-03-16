@@ -10,7 +10,6 @@ if !filereadable(expand(s:plug_autoload_path))
     silent exec "so " . fnameescape(g:plug_autoload_path)
 endif
 
-
 call plug#begin("~/.config/nvim/plugged")
 
 " Editorconfig
@@ -37,7 +36,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
 
 " Editing candy
-Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-repeat'
@@ -51,7 +49,7 @@ Plug 'honza/vim-snippets'
 Plug 'algotech/ultisnips-php'
 
 " Autocompletion providers for deoplete
-Plug 'lvht/phpcd.vim', {'for': 'php', 'do': 'composer install'}
+" Plug 'lvht/phpcd.vim', {'for': 'php', 'do': 'composer install'}
 Plug 'pbogut/deoplete-elm'
 Plug 'Shougo/neco-vim'
 Plug 'carlitux/deoplete-ternjs'
@@ -77,7 +75,7 @@ Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
 Plug 'justinmk/molokai'
 Plug 'arcticicestudio/nord-vim', {'branch': 'develop'}
-Plug 'zeis/vim-kolor'
+Plug 'joshdick/onedark.vim'
 
 call plug#end()
 
@@ -96,12 +94,12 @@ set relativenumber
 set smartcase
 set smartindent
 set smarttab
-"set termguicolors
+set termguicolors
 
 set clipboard=unnamed
 set colorcolumn=80
 set cmdheight=2
-set guifont=Input:h12
+set guifont=Hack:h12
 set listchars=trail:·,tab:▸\ ,eol:¬
 " set showtabline=2
 set tabstop=4
@@ -114,18 +112,15 @@ set expandtab
 set foldmethod=syntax
 let php_folding = 1
 
-=======
-set foldmethod=syntax
-let php_folding=1
-
 " Get gruvbox to look nicer
 set background=dark
-let g:gruvbox_contrast_dark = "hard"
 let g:gruvbox_italic = 1
 
 let g:nord_italic = 1
 let g:nord_italic_comments = 1
-let g:nord_comment_brightness = 14
+let g:nord_comment_brightness = 20
+
+let g:onedark_terminal_italics = 1
 
 colorscheme nord
 
@@ -151,9 +146,14 @@ let g:airline_mode_map = {
 " Deoplete configuration
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
-call deoplete#custom#set('phpcd', 'rank', 999)
+" call deoplete#custom#set('phpcd', 'rank', 999)
 
 " Configure ale linters
+
+let g:ale_linters = {
+\   'php': ['php']
+\}
+
 " let g:ale_javascript_standard_executable = 'standard'
 let g:ale_javascript_standard_executable = 'semistandard'
 
