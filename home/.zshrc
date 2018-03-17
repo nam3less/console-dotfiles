@@ -7,17 +7,11 @@ if [[ ! -a ~/.zplug ]]; then
         | zsh
 fi
 
-source ~/.zplug/init.zsh
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-
-TERMINAL=st
-export $TERMINAL
 
 # Let zplug manage itself
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # Declare zsh plugins to download and source
-
 # Editing helpers
 zplug "zsh-users/zsh-autosuggestions", \
     use:zsh-autosuggestions.zsh
@@ -43,7 +37,7 @@ SPACESHIP_TIME_SHOW=true
 alias k='k -A -h'
 alias mmv='noglob zmv -W'
 
-export TERMINAL=termite
+
+eval $(thefuck --alias)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-

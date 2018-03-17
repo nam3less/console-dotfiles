@@ -17,14 +17,11 @@ call plug#begin("~/.config/nvim/plugged")
 Plug 'editorconfig/editorconfig-vim'
 
 " Eyecandy
-" Plug 'itchyny/lightline.vim'
-" Plug 'mgee/lightline-bufferline'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 
 " Fuzzy search
 if executable('fzf')
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug '/usr/share/vim/vimfiles/'
     Plug 'junegunn/fzf.vim'
 else
     Plug 'ctrlpvim/ctrlp.vim'
@@ -34,10 +31,9 @@ endif
 Plug 'tpope/vim-vinegar'
 
 " Editing candy
-Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'tomtom/tcomment.vim'
+Plug 'tomtom/tcomment_vim'
 Plug 'jiangmiao/auto-pairs'
 
 " PLEASE let me type less
@@ -46,14 +42,15 @@ Plug 'mattn/emmet-vim'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'algotech/ultisnips-php'
+Plug 'dhruvasagar/vim-table-mode'
 
 " Autocompletion providers for deoplete
-Plug 'pbogut/deoplete-elm'
-Plug 'padawan-php/deoplete-padawan', {'do': 'composer install'}
-Plug 'zchee/deoplete-zsh'
+" Plug 'pbogut/deoplete-elm'
+" Plug 'zchee/deoplete-zsh'
 Plug 'Shougo/neco-vim'
-Plug 'mhartington/nvim-typescript'
+" Plug 'mhartington/nvim-typescript'
 Plug 'carlitux/deoplete-ternjs'
+
 
 " Get a lot of language integration
 Plug 'sheerun/vim-polyglot'
@@ -63,11 +60,15 @@ Plug 'w0rp/ale'
 " REPL Integration for vim
 Plug 'metakirby5/codi.vim'
 
+" Ruby goodness
+Plug 'vim-ruby/vim-ruby'
+
 " All in one for elixir
 Plug 'slashmili/alchemist.vim'
 
 " Syntax theme
 Plug 'morhetz/gruvbox'
+Plug 'jacoborus/tender.vim'
 
 call plug#end()
 
@@ -90,43 +91,30 @@ set clipboard=unnamed
 set cmdheight=2
 set guifont=Hack:h11
 set listchars=trail:·,tab:▸\ ,eol:¬
+set showtabline=2
 set tabstop=4
 set viminfo^=%
 
 set foldmethod=syntax
 let php_folding=1
 
-" Colorize vim nicely
-colorscheme gruvbox
 " Get gruvbox to look nicer
 set background=dark
 let g:gruvbox_contrast_dark = "hard"
 let g:gruvbox_italic = 1
 
+
+" Colorize vim nicely
+colorscheme gruvbox
+
 " Let me keep my beautiful transparent background
 hi Normal guibg=NONE ctermbg=NONE
 
-" Make eyecandy even more suggary
-let g:airline_powerline_fonts = 1
-let g:airline_theme = "minimalist"
-
-let g:airline_mode_map = {
-  \ '__' : '-',
-  \ 'n'  : 'N',
-  \ 'i'  : 'I',
-  \ 'R'  : 'R',
-  \ 'c'  : 'C',
-  \ 'v'  : 'V',
-  \ 'V'  : 'V',
-  \ '' : 'V',
-  \ 's'  : 'S',
-  \ 'S'  : 'S',
-  \ '' : 'S',
-  \ }
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#fnamemod = ":t"
+let g:lightline = {
+    \ 'colorscheme' : 'tender',
+    \ 'separator': { 'left': '', 'right': '' },
+    \ 'subseparator': { 'left': '', 'right': '' },
+    \ }
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
@@ -147,16 +135,16 @@ if !exists(':BufferClean')
 endif
 
 " set the leader character
-let mapleader = "ö"
+let mapleader = " "
 
 " Normal mode remaps
 nnoremap <C-L> :nohl<CR><C-L>
 
 " fzf command mappings
 " mnemonic find
-nnoremap <leader>f :Files<CR>
-nnoremap <leader>b :Buffers<CR>
-nnoremap <leader>l :Lines<CR>
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fb :Buffers<CR>
+nnoremap <leader>fl :Lines<CR>
 
 " source vimrc and edit vimrc
 nnoremap <leader>sv :source ~/.config/nvim/init.vim<CR>
