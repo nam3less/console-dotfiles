@@ -1,5 +1,5 @@
-function fish_prompt
-    set -l color_cwd
+function fish_prompt --description 'Write out the prompt'
+	  set -l color_cwd
     set -l suffix
 
     switch $USER
@@ -10,13 +10,13 @@ function fish_prompt
                 set color_cwd $fish_color_cwd
             end
             set suffix '#'
-
         case '*'
             set color_cwd $fish_color_cwd
             set suffix 'λ'
     end
 
     echo -s "$USER" @ (prompt_hostname) ' ' (set_color $color_cwd) (prompt_pwd)
-    echo -n (set_color green) "$suffix " (set_color normal)
+    set_color green --bold
+    echo -n " $suffix  "
+    set_color normal
 end
-
