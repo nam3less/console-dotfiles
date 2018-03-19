@@ -7,9 +7,6 @@ source ~/.homesick/repos/homeshick/homeshick.fish
 
 if test (uname) = 'Linux'; and test (tty) = '/dev/tty1'
     set -x TERMINAL urxvtc
-
-    setxkbmap -layout en_US -option caps:escape
-
     startx
 end
 
