@@ -34,6 +34,7 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(vimscript
+     sql
      shell-scripts
      yaml
      ruby
@@ -41,6 +42,10 @@ This function should only modify configuration layer settings."
      php
      python
      elixir
+     javascript
+     theming
+     themes-megapack
+     html
      semantic
      mu4e
      ;; ----------------------------------------------------------------
@@ -50,43 +55,59 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      helm
      haskell
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behaviour 'cycle
+                      auto-completion-enable-snippets-in-popup t)
      ;; better-defaults
      emacs-lisp
      git
      markdown
+     neotree
+     shell
      (org :variables
           org-enable-github-support t
-          org-enable-bootstrap-support t)
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
-     spell-checking
+          org-enable-bootstrap-support t
+          org-projectile-file "TODO.org")
+     osx
+     nlinum
+     (colors
+         :variable colors-enable-nyan-cat-progress-bar t)
+
+     ;; (spell-checking :variables
+     ;;                 spell-checking-enable-auto-dictionary t)
      syntax-checking
-     version-control)
-     ;; List of additional packages that will be installed without being
-     ;; wrapped in a layer. If you need some configuration for these
-     ;; packages, then consider creating a layer. You can also put the
-     ;; configuration in `dotspacemacs/user-config'.
-     ;; To use a local version of a package, use the `:location' property:
-     ;; '(your-package :location "~/path/to/your-package/")
-     ;; Also include the dependencies as they will not be resolved automatically.
-     dotspacemacs-additional-packages '()
+     version-control
+     xkcd)
 
-     ;; A list of packages that cannot be updated.
-     dotspacemacs-frozen-packages '()
+   ;; List of additional packages that will be installed without being
+   ;; wrapped in a layer. If you need some configuration for these
+   ;; packages, then consider creating a layer. You can also put the
+   ;; configuration in `dotspacemacs/user-config'.
+   ;; To use a local version of a package, use the `:location' property:
+   ;; '(your-package :location "~/path/to/your-package/")
+   ;; Also include the dependencies as they will not be resolved automatically.
+   dotspacemacs-additional-packages
+   '(writeroom-mode
+     nord-theme
+     vue-mode
+     ede-php-autoload
+     md4rd)
 
-     ;; A list of packages that will not be installed and loaded.
-     dotspacemacs-excluded-packages '()
+   ;; A list of packages that cannot be updated.
+   dotspacemacs-frozen-packages '()
 
-     ;; Defines the behaviour of Spacemacs when installing packages.
-     ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
-     ;; `used-only' installs only explicitly used packages and deletes any unused
-     ;; packages as well as their unused dependencies. `used-but-keep-unused'
-     ;; installs only the used packages but won't delete unused ones. `all'
-     ;; installs *all* packages supported by Spacemacs and never uninstalls them.
-     ;; (default is `used-only')
-     dotspacemacs-install-packages 'used-only))
+   ;; A list of packages that will not be installed and loaded.
+   dotspacemacs-excluded-packages '()
+
+   ;; Defines the behaviour of Spacemacs when installing packages.
+   ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
+   ;; `used-only' installs only explicitly used packages and deletes any unused
+   ;; packages as well as their unused dependencies. `used-but-keep-unused'
+   ;; installs only the used packages but won't delete unused ones. `all'
+   ;; installs *all* packages supported by Spacemacs and never uninstalls them.
+   ;; (default is `used-only')
+   dotspacemacs-install-packages 'used-only))
 
 (defun dotspacemacs/init ()
   "Initialization:
@@ -185,7 +206,7 @@ It should only modify the values of Spacemacs settings."
    ;; to create your own spaceline theme. Value can be a symbol or list with\
    ;; additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
+   dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.2)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -193,7 +214,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Hack"
+   dotspacemacs-default-font '("Overpass Mono"
                                :size 13
                                :weight normal
                                :width normal)
@@ -214,7 +235,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Major mode leader key is a shortcut key which is the equivalent of
    ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
-   dotspacemacs-major-mode-leader-key ","
+   dotspacemacs-major-mode-leader-key "\\"
 
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
    ;; (default "C-M-m")
@@ -332,7 +353,7 @@ It should only modify the values of Spacemacs settings."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 90
+   dotspacemacs-active-transparency 100
 
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
@@ -374,6 +395,7 @@ It should only modify the values of Spacemacs settings."
                                                    pdf-view-mode
                                                    text-mode
                                :size-limit-kb 1000)
+
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -432,7 +454,7 @@ It should only modify the values of Spacemacs settings."
    ;; `trailing' to delete only the whitespace at end of lines, `changed' to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup "all"
 
    ;; Either nil or a number of seconds. If non-nil zone out after the specified
    ;; number of seconds. (default nil)
@@ -449,7 +471,21 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  )
+  (setq nord-comment-brightness 20)
+
+  (when (eq system-type 'darwin)
+    (setq mac-right-command-modifier nil))
+
+  (setq-default js2-basic-offset 2
+                js-indent-level 2)
+
+  (setq-default flycheck-javascript-standard-executable "semistandard")
+  (setq-default url-using-proxy t)
+  (setq-default url-proxy-services
+        '(("http" . "192.168.1.254:8080")
+          ("https" . "192.168.1.254:8080")
+          ("ftp" . "192.168.1.254:8080"))))
+
 
 (defun dotspacemacs/user-config ()
   "Configuration for user code:
@@ -457,7 +493,25 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  )
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize))
+
+  (setq-default projectile-enable-caching t)
+
+  (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
+  (add-hook 'php-mode-hook 'ede-php-autoload-mode)
+  (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
+  (unless (boundp 'web-mode-engines-alist)
+    (setq web-mode-engines-alist '(("blade" . "\\.blade\\."))))
+
+  (setq-default neo-theme 'icons)
+
+  (spacemacs|add-toggle writeroom-mode
+    :status writeroom-mode
+    :on (writeroom-mode)
+    :off (writeroom-mode -1)
+    :documentation "Turn on writeroom mode."
+    :evil-leader "tw"))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -473,7 +527,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (vimrc-mode dactyl-mode insert-shebang helm-gtags ggtags flycheck-bashate fish-mode counsel-gtags company-shell yaml-mode intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell dante lcr company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode yasnippet-snippets yapfify xterm-color ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit symon string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe restart-emacs rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pippel pipenv pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode password-generator paradox ox-twbs ox-gfm overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file ob-elixir nord-theme neotree nameless multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum live-py-mode linum-relative link-hint less-css-mode indent-guide importmagic impatient-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mu helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav editorconfig dumb-jump drupal-mode diminish diff-hl define-word cython-mode counsel-projectile company-web company-statistics company-php company-anaconda column-enforce-mode clean-aindent-mode chruby centered-cursor-mode bundler browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (yapfify yaml-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe rbenv rake pyvenv pytest pyenv-mode py-isort pippel pipenv pip-requirements ob-elixir mu4e-maildirs-extension mu4e-alert ht minitest live-py-mode intero importmagic epc ctable concurrent deferred hy-mode hlint-refactor hindent helm-pydoc helm-mu helm-hoogle haskell-snippets flycheck-mix flycheck-haskell flycheck-credo dante lcr cython-mode company-ghci company-ghc ghc haskell-mode company-cabal company-anaconda cmm-mode chruby bundler inf-ruby anaconda-mode pythonic alchemist elixir-mode zenburn-theme zen-and-art-theme yasnippet-snippets xterm-color xkcd ws-butler writeroom-mode winum white-sand-theme which-key web-mode web-beautify vue-mode volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit symon sunny-day-theme sublime-themes subatomic256-theme subatomic-theme string-inflection stickyfunc-enhance srefactor sql-indent spaceline-all-the-icons spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle slim-mode shell-pop seti-theme scss-mode sass-mode reverse-theme reveal-in-osx-finder restart-emacs rebecca-theme rainbow-mode rainbow-identifiers rainbow-delimiters railscasts-theme purple-haze-theme pug-mode professional-theme popwin planet-theme phpunit phpcbf php-extras php-auto-yasnippets phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode pcre2el pbcopy password-generator paradox ox-twbs ox-gfm overseer osx-trash osx-dictionary orgit organic-green-theme org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme nord-theme noctilux-theme nlinum-relative neotree naquadah-theme nameless mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme md4rd material-theme markdown-toc majapahit-theme magit-gitflow madhat2r-theme macrostep lush-theme lorem-ipsum livid-mode link-hint light-soap-theme launchctl json-mode js2-refactor js-doc jbeans-theme jazz-theme ir-black-theme insert-shebang inkpot-theme indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation heroku-theme hemisu-theme helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md gandalf-theme fuzzy font-lock+ flycheck-pos-tip flycheck-bashate flx-ido flatui-theme flatland-theme fish-mode fill-column-indicator farmhouse-theme fancy-battery eyebrowse expand-region exotica-theme exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu espresso-theme eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav editorconfig ede-php-autoload dumb-jump drupal-mode dracula-theme django-theme diminish diff-hl darktooth-theme darkokai-theme darkmine-theme darkburn-theme dakrone-theme dactyl-mode cyberpunk-theme counsel-projectile company-web company-tern company-statistics company-shell company-php column-enforce-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode coffee-mode clues-theme clean-aindent-mode cherry-blossom-theme centered-cursor-mode busybee-theme bubbleberry-theme browse-at-remote birds-of-paradise-plus-theme badwolf-theme auto-yasnippet auto-highlight-symbol auto-compile apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes aggressive-indent afternoon-theme adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
