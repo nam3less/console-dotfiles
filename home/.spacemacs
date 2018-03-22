@@ -504,14 +504,7 @@ before packages are loaded."
   (unless (boundp 'web-mode-engines-alist)
     (setq web-mode-engines-alist '(("blade" . "\\.blade\\."))))
 
-  (setq-default neo-theme 'icons)
-
-  (spacemacs|add-toggle writeroom-mode
-    :status writeroom-mode
-    :on (writeroom-mode)
-    :off (writeroom-mode -1)
-    :documentation "Turn on writeroom mode."
-    :evil-leader "tw"))
+  (setq-default neo-theme 'icons))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
