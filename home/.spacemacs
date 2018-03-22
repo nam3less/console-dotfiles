@@ -34,6 +34,7 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(vimscript
+     sql
      shell-scripts
      yaml
      ruby
@@ -41,6 +42,10 @@ This function should only modify configuration layer settings."
      php
      python
      elixir
+     javascript
+     theming
+     themes-megapack
+     html
      semantic
      mu4e
      ;; ----------------------------------------------------------------
@@ -50,43 +55,59 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      helm
      haskell
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behaviour 'cycle
+                      auto-completion-enable-snippets-in-popup t)
      ;; better-defaults
      emacs-lisp
      git
      markdown
+     neotree
+     shell
      (org :variables
           org-enable-github-support t
-          org-enable-bootstrap-support t)
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
-     spell-checking
+          org-enable-bootstrap-support t
+          org-projectile-file "TODO.org")
+     osx
+     nlinum
+     (colors
+         :variable colors-enable-nyan-cat-progress-bar t)
+
+     ;; (spell-checking :variables
+     ;;                 spell-checking-enable-auto-dictionary t)
      syntax-checking
-     version-control)
-     ;; List of additional packages that will be installed without being
-     ;; wrapped in a layer. If you need some configuration for these
-     ;; packages, then consider creating a layer. You can also put the
-     ;; configuration in `dotspacemacs/user-config'.
-     ;; To use a local version of a package, use the `:location' property:
-     ;; '(your-package :location "~/path/to/your-package/")
-     ;; Also include the dependencies as they will not be resolved automatically.
-     dotspacemacs-additional-packages '()
+     version-control
+     xkcd)
 
-     ;; A list of packages that cannot be updated.
-     dotspacemacs-frozen-packages '()
+   ;; List of additional packages that will be installed without being
+   ;; wrapped in a layer. If you need some configuration for these
+   ;; packages, then consider creating a layer. You can also put the
+   ;; configuration in `dotspacemacs/user-config'.
+   ;; To use a local version of a package, use the `:location' property:
+   ;; '(your-package :location "~/path/to/your-package/")
+   ;; Also include the dependencies as they will not be resolved automatically.
+   dotspacemacs-additional-packages
+   '(writeroom-mode
+     nord-theme
+     vue-mode
+     ede-php-autoload
+     md4rd)
 
-     ;; A list of packages that will not be installed and loaded.
-     dotspacemacs-excluded-packages '()
+   ;; A list of packages that cannot be updated.
+   dotspacemacs-frozen-packages '()
 
-     ;; Defines the behaviour of Spacemacs when installing packages.
-     ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
-     ;; `used-only' installs only explicitly used packages and deletes any unused
-     ;; packages as well as their unused dependencies. `used-but-keep-unused'
-     ;; installs only the used packages but won't delete unused ones. `all'
-     ;; installs *all* packages supported by Spacemacs and never uninstalls them.
-     ;; (default is `used-only')
-     dotspacemacs-install-packages 'used-only))
+   ;; A list of packages that will not be installed and loaded.
+   dotspacemacs-excluded-packages '()
+
+   ;; Defines the behaviour of Spacemacs when installing packages.
+   ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
+   ;; `used-only' installs only explicitly used packages and deletes any unused
+   ;; packages as well as their unused dependencies. `used-but-keep-unused'
+   ;; installs only the used packages but won't delete unused ones. `all'
+   ;; installs *all* packages supported by Spacemacs and never uninstalls them.
+   ;; (default is `used-only')
+   dotspacemacs-install-packages 'used-only))
 
 (defun dotspacemacs/init ()
   "Initialization:
@@ -193,7 +214,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Hack"
+   dotspacemacs-default-font '("Overpass Mono"
                                :size 13
                                :weight normal
                                :width normal)
@@ -332,7 +353,7 @@ It should only modify the values of Spacemacs settings."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 90
+   dotspacemacs-active-transparency 100
 
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
@@ -374,6 +395,7 @@ It should only modify the values of Spacemacs settings."
                                                    pdf-view-mode
                                                    text-mode
                                :size-limit-kb 1000)
+
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -432,7 +454,7 @@ It should only modify the values of Spacemacs settings."
    ;; `trailing' to delete only the whitespace at end of lines, `changed' to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup "all"
 
    ;; Either nil or a number of seconds. If non-nil zone out after the specified
    ;; number of seconds. (default nil)
@@ -449,7 +471,21 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  )
+  (setq nord-comment-brightness 20)
+
+  (when (eq system-type 'darwin)
+    (setq mac-right-command-modifier nil))
+
+  (setq-default js2-basic-offset 2
+                js-indent-level 2)
+
+  (setq-default flycheck-javascript-standard-executable "semistandard")
+  (setq-default url-using-proxy t)
+  (setq-default url-proxy-services
+        '(("http" . "192.168.1.254:8080")
+          ("https" . "192.168.1.254:8080")
+          ("ftp" . "192.168.1.254:8080"))))
+
 
 (defun dotspacemacs/user-config ()
   "Configuration for user code:
@@ -457,27 +493,25 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  )
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize))
+
+  (setq-default projectile-enable-caching t)
+
+  (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
+  (add-hook 'php-mode-hook 'ede-php-autoload-mode)
+  (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
+  (unless (boundp 'web-mode-engines-alist)
+    (setq web-mode-engines-alist '(("blade" . "\\.blade\\."))))
+
+  (setq-default neo-theme 'icons)
+
+  (spacemacs|add-toggle writeroom-mode
+    :status writeroom-mode
+    :on (writeroom-mode)
+    :off (writeroom-mode -1)
+    :documentation "Turn on writeroom mode."
+    :evil-leader "tw"))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
-This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (smartparens helm helm-core magit spaceline yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-mode volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org tagedit symon string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe restart-emacs rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode powerline popwin pippel pipenv pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode password-generator paradox ox-twbs ox-gfm overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file ob-elixir neotree nameless multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum live-py-mode linum-relative link-hint less-css-mode intero insert-shebang indent-guide importmagic impatient-mode hy-mode hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mu helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ ghub gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-mix flycheck-haskell flycheck-credo flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav editorconfig dumb-jump drupal-mode diminish diff-hl define-word dante dactyl-mode cython-mode counsel-projectile company-web company-statistics company-shell company-php company-ghci company-ghc company-cabal company-anaconda column-enforce-mode cmm-mode clean-aindent-mode chruby centered-cursor-mode bundler browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)
