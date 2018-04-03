@@ -6,8 +6,8 @@ let s:plug_download_url  = "https://raw.githubusercontent.com/junegunn/vim-plug/
 
 " If plug isn't installed, install it
 if !filereadable(expand(s:plug_autoload_path))
-    silent exec "curl -fLo " . fnameescape(g:plug_autoload_path) . " --create-dirs " . g:plug_download_url
-    silent exec "so " . fnameescape(g:plug_autoload_path)
+    silent exec "!curl -fLo " . fnameescape(s:plug_autoload_path) . " --create-dirs " . s:plug_download_url
+    silent exec "so " . fnameescape(s:plug_autoload_path)
 endif
 
 call plug#begin("~/.config/nvim/plugged")

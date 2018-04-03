@@ -1,0 +1,19 @@
+* Console dotfiles
+  This is one of the parts of my configuration.
+  Should rather be name terminal dotfiles, but who cares?
+  
+** Contents
+   This repository contains configurations for the following programms:
+   - vim
+   - neovim
+   - afew
+   - alot
+   - fish
+   - neofetch
+   - git
+   - mbsync
+   - msmtp
+   - notmuch
+   - spacemacs
+   - tmux
+   - zsh
