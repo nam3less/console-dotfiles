@@ -45,19 +45,14 @@ This function should only modify configuration layer settings."
      elixir
      javascript
      theming
+     theme-megapack
      html
      pdf-tools
      semantic
      ranger
      mu4e
      (ranger :variables
-             ranger-show-preview t
-             ranger-show-literal nil
-             ranger-show-hidden nil
-             ranger-dont-show-binary t
-             ranger-cleanup-on-disable t
-             ranger-width-parents 0.2
-             ranger-width-preview 0.4)
+             ranger-show-preview t)
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -225,7 +220,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Overpass Mono"
-                               :size 12
+                               :size 13
                                :weight normal
                                :width normal)
 
@@ -520,6 +515,13 @@ before packages are loaded."
   (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
   (unless (boundp 'web-mode-engines-alist)
     (setq web-mode-engines-alist '(("blade" . "\\.blade\\."))))
+
+  (setq-default ranger-show-literal nil
+                ranger-show-hidden nil
+                ranger-dont-show-binary t
+                ranger-cleanup-on-disable t
+                ranger-width-parents 0.2
+                ranger-width-preview 0.4)
 
   (setq-default neo-theme 'icons))
 
