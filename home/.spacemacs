@@ -49,20 +49,15 @@ This function should only modify configuration layer settings."
      semantic
      mu4e
      (ranger :variables
-             ranger-show-preview t
-             ranger-show-literal nil
-             ranger-show-hidden nil
-             ranger-dont-show-binary t
-             ranger-cleanup-on-disable t
-             ranger-width-parents 0.2
-             ranger-width-preview 0.4)
+             ranger-show-preview t)
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     haskell
+     (haskell :variables
+              haskell-completion-backend 'intero)
      (auto-completion :variables
                       auto-completion-return-key-behavior 'complete
                       auto-completion-tab-key-behaviour 'cycle
@@ -95,9 +90,7 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages
-   '(writeroom-mode
-     nord-theme
-     vue-mode
+   '(vue-mode
      ede-php-autoload
      md4rd)
 
@@ -511,9 +504,17 @@ before packages are loaded."
 
   (evil-set-initial-state 'pdf-view-mode 'normal)
 
+  (setq-default ranger-show-literal nil
+                ranger-show-hidden nil
+                ranger-dont-show-binary t
+                ranger-cleanup-on-disable t
+                ranger-width-parents 0.2
+                ranger-width-preview 0.4)
+
   (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
   (add-hook 'php-mode-hook 'ede-php-autoload-mode)
   (add-hook 'pdf-view-mode '(local-unset-key (key "C-w")))
+
   (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
   (unless (boundp 'web-mode-engines-alist)
     (setq web-mode-engines-alist '(("blade" . "\\.blade\\."))))
