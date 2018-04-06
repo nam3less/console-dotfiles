@@ -45,7 +45,7 @@ This function should only modify configuration layer settings."
      elixir
      javascript
      theming
-     theme-megapack
+     ;; themes-megapack
      html
      pdf-tools
      semantic
