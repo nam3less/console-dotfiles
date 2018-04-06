@@ -511,11 +511,14 @@ before packages are loaded."
                 ranger-width-parents 0.2
                 ranger-width-preview 0.4)
 
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+
   (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
   (add-hook 'php-mode-hook 'ede-php-autoload-mode)
   (add-hook 'pdf-view-mode '(local-unset-key (key "C-w")))
 
   (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
+
   (unless (boundp 'web-mode-engines-alist)
     (setq web-mode-engines-alist '(("blade" . "\\.blade\\."))))
 
