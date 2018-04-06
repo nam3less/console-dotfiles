@@ -7,6 +7,10 @@ source ~/.homesick/repos/homeshick/homeshick.fish
 
 if test (uname) = 'Linux'; and test (tty) = '/dev/tty1'
     set -x TERMINAL urxvtc
+
+    set -x QT_QPA_PLATFORMTHEME qt5ct
+    set -x QT_PLATFORM_PLUGIN qt5ct
+
     startx
 end
 

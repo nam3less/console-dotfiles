@@ -1,0 +1,10 @@
+* Changelog
+** 2018-04-05
+*** Spacemacs 
+    - Changed Haskell backend to intero
+    - Removed unnecessary packages
+    - Moved ranger configuration from the variable block into the 
+      dotspacemacs/user-config function.
+      
+*** Shell init
+    - Added QT environment variables to enable qt5ct theming
