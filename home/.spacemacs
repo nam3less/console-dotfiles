@@ -507,6 +507,8 @@ before packages are loaded."
   (setq-default projectile-enable-caching t)
 
   (evil-set-initial-state 'pdf-view-mode 'normal)
+  (with-eval-after-load 'pdf-view-mode
+    (unbind-key (kbd "C-w") pdf-view-mode-map))
 
   (setq-default ranger-show-literal nil
                 ranger-show-hidden nil
