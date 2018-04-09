@@ -95,6 +95,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages
    '(vue-mode
+     monokai-theme
      ede-php-autoload
      md4rd)
 
