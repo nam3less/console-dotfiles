@@ -1,5 +1,16 @@
 ;;; init.el -*- lexical-binding: t; -*-
-;; Copy me to ~/.doom.d/init.el or ~/.config/doom/init.el, then edit me!
+
+(setq-default doom-font (font-spec :family "Hack" :size 12)
+              doom-line-numbers-style 'relative)
+
+(when (eq system-type 'darwin)
+  (setq-default mac-command-modifier 'meta
+                mac-right-command-modifier nil
+                url-using-proxy t
+                url-proxy-services
+                '(("http" . "192.168.1.254:8080")
+                  ("https" . "192.168.1.254:8080")
+                  ("ftp" . "192.168.1.254:8080"))))
 
 (doom! :feature
        (popup            ; tame sudden yet inevitable temporary windows
@@ -121,16 +132,3 @@
        ;; and additional ex commands for evil-mode. Use it as a reference for
        ;; your own modules.
        (default +bindings +snippets +evil-commands))
-
-(setq doom-font (font-spec :family "Overpass Mono" :size 13))
-(setq doom-line-numbers-style 'relative)
-
-(setq-default flycheck-javascript-standard-executable "semistandard")
-
-(when (eq system-type 'darwin)
-  (setq mac-right-command-modifier nil)
-  (setq-default url-using-proxy t
-                url-proxy-services
-                '(("http" . "192.168.1.254:8080")
-                  ("https" . "192.168.1.254:8080")
-                  ("ftp" . "192.168.1.254:8080"))))
