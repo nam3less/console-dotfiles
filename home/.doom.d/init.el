@@ -1,6 +1,18 @@
 ;;; init.el -*- lexical-binding: t; -*-
 ;; Copy me to ~/.doom.d/init.el or ~/.config/doom/init.el, then edit me!
 
+(when (eq system-type 'darwin)
+  (setq mac-command-modifier 'meta)
+  (setq mac-right-command-modifier 'none)
+  (setq-default url-using-proxy t
+                url-proxy-services
+                '(("http" . "192.168.1.254:8080")
+                  ("https" . "192.168.1.254:8080")
+                  ("ftp" . "192.168.1.254:8080"))))
+
+(setq-default doom-font (font-spec :family "Overpass Mono" :size 12))
+(setq-default doom-line-numbers-style 'relative)
+
 (doom! :feature
        (popup            ; tame sudden yet inevitable temporary windows
         +all             ; catch all popups that start with an asterix
@@ -20,7 +32,7 @@
        workspaces        ; tab emulation, persistence & separate workspaces
 
        :completion
-       company           ; the ultimate code completion backend
+       (company +auto)   ; the ultimate code completion backend
       ;helm              ; the *other* search engine for love and life
       ;ido               ; the other *other* search engine...
        ivy               ; a search engine for love and life
@@ -121,16 +133,3 @@
        ;; and additional ex commands for evil-mode. Use it as a reference for
        ;; your own modules.
        (default +bindings +snippets +evil-commands))
-
-(setq doom-font (font-spec :family "Overpass Mono" :size 13))
-(setq doom-line-numbers-style 'relative)
-
-(setq-default flycheck-javascript-standard-executable "semistandard")
-
-(when (eq system-type 'darwin)
-  (setq mac-right-command-modifier nil)
-  (setq-default url-using-proxy t
-                url-proxy-services
-                '(("http" . "192.168.1.254:8080")
-                  ("https" . "192.168.1.254:8080")
-                  ("ftp" . "192.168.1.254:8080"))))

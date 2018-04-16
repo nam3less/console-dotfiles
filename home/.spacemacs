@@ -95,7 +95,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages
    '(vue-mode
-     monokai-theme
+     spacegray-theme
      ede-php-autoload
      md4rd)
 
@@ -510,6 +510,7 @@ before packages are loaded."
   (evil-set-initial-state 'pdf-view-mode 'normal)
   (with-eval-after-load 'pdf-view-mode
     (unbind-key (kbd "C-w") pdf-view-mode-map))
+  (add-hook 'pdf-view-mode '(local-unset-key (key "C-w")))
 
   (setq-default ranger-show-literal nil
                 ranger-show-hidden nil
@@ -522,7 +523,6 @@ before packages are loaded."
 
   (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
   (add-hook 'php-mode-hook 'ede-php-autoload-mode)
-  (add-hook 'pdf-view-mode '(local-unset-key (key "C-w")))
 
   (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
 
