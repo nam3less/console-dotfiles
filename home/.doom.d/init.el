@@ -1,5 +1,16 @@
 ;;; init.el -*- lexical-binding: t; -*-
-;; Copy me to ~/.doom.d/init.el or ~/.config/doom/init.el, then edit me!
+
+(setq-default doom-font (font-spec :family "Hack" :size 12)
+              doom-line-numbers-style 'relative)
+
+(when (eq system-type 'darwin)
+  (setq-default mac-command-modifier 'meta
+                mac-right-command-modifier nil
+                url-using-proxy t
+                url-proxy-services
+                '(("http" . "192.168.1.254:8080")
+                  ("https" . "192.168.1.254:8080")
+                  ("ftp" . "192.168.1.254:8080"))))
 
 (when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta)

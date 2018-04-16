@@ -219,7 +219,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Overpass Mono"
+   dotspacemacs-default-font '("Hack"
                                :size 13
                                :weight normal
                                :width normal)
@@ -499,19 +499,24 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  ;; Fetch the shell environment on mac
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize))
 
+  ;; Fixing the rendering of spaceline if emacs is strated in daemon mode
   (spacemacs|do-after-display-system-init
    (spacemacs-modeline/init-spaceline))
 
+  ;; Projectile caching
   (setq-default projectile-enable-caching t)
 
+  ;; PDF view improvements
   (evil-set-initial-state 'pdf-view-mode 'normal)
   (with-eval-after-load 'pdf-view-mode
     (unbind-key (kbd "C-w") pdf-view-mode-map))
   (add-hook 'pdf-view-mode '(local-unset-key (key "C-w")))
 
+  ;; Ranger settings
   (setq-default ranger-show-literal nil
                 ranger-show-hidden nil
                 ranger-dont-show-binary t
@@ -519,22 +524,16 @@ before packages are loaded."
                 ranger-width-parents 0.2
                 ranger-width-preview 0.4)
 
+  ;; Haskell
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
+  ;; PHP settings
   (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
   (add-hook 'php-mode-hook 'ede-php-autoload-mode)
-
   (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
 
   (unless (boundp 'web-mode-engines-alist)
     (setq web-mode-engines-alist '(("blade" . "\\.blade\\."))))
-
-  (setq-default ranger-show-literal nil
-                ranger-show-hidden nil
-                ranger-dont-show-binary t
-                ranger-cleanup-on-disable t
-                ranger-width-parents 0.2
-                ranger-width-preview 0.4)
 
   (setq-default neo-theme 'icons))
 
