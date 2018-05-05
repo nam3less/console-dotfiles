@@ -485,11 +485,11 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                 js-indent-level 2)
 
   (setq-default flycheck-javascript-standard-executable "semistandard")
-  ;; (setq-default url-using-proxy t)
-  ;; (setq-default url-proxy-services
-  ;;       '(("http" . "192.168.1.254:8080")
-  ;;         ("https" . "192.168.1.254:8080")
-  ;;         ("ftp" . "192.168.1.254:8080")))
+  (when (eq sysytem-type 'darwin)
+    (setq-default url-using-proxy t
+                  url-proxy-services '(("http" . "192.168.1.254:8080")
+                                       ("https" . "192.168.1.254:8080")
+                                       ("ftp" . "192.168.1.254:8080"))))
 )
 
 

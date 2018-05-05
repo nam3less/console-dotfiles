@@ -11,6 +11,8 @@ if test (uname) = 'Linux'; and test (tty) = '/dev/tty1'
     set -x QT_QPA_PLATFORMTHEME qt5ct
     set -x QT_PLATFORM_PLUGIN qt5ct
 
+    set -x PATH $PATH "/opt/texlive/2017/bin/x86_64-linux"
+
     startx
 end
 

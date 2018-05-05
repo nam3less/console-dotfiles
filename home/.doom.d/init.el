@@ -72,7 +72,7 @@
        upload            ; map local to remote projects via ssh/ftp
 
        :lang
-       assembly          ; assembly for fun or debugging
+      ;assembly          ; assembly for fun or debugging
        cc                ; C/C++/Obj-C madness
        crystal           ; ruby at the speed of c
        clojure           ; java with a lisp
@@ -83,9 +83,9 @@
        elm               ; care for a cup of TEA?
        emacs-lisp        ; drown in parentheses
        ess               ; emacs speaks statistics
-       go                ; the hipster dialect
+      ;go                ; the hipster dialect
        (haskell +intero) ; a language that's lazier than I am
-       hy                ; readability of scheme w/ speed of python
+      ;hy                ; readability of scheme w/ speed of python
        (java +meghanada) ; the poster child for carpal tunnel syndrome
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
        julia             ; a better, faster MATLAB
@@ -93,10 +93,10 @@
         +skim
         +latexmk)        ; writing papers in Emacs has never been so fun
        ledger            ; an accounting system in Emacs
-       lua               ; one-based indices? one-based indices
+      ;lua               ; one-based indices? one-based indices
        markdown          ; writing docs for people to ignore
        nix               ; I hereby declare "nix geht mehr!"
-       ocaml             ; an objective camel
+      ;ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
         +attach          ; custom attachment system
         +babel           ; running code in org
@@ -104,7 +104,7 @@
         +export          ; Exporting org to whatever you want
         +present         ; Emacs for presentations
         +publish)        ; Emacs+Org as a static site generator
-       perl              ; write code no one else can comprehend
+      ;perl              ; write code no one else can comprehend
        php               ; perl's insecure younger brother
        plantuml          ; diagrams for confusing people more
        purescript        ; javascript, but functional
