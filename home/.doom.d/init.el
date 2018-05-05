@@ -1,7 +1,9 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
 (setq-default doom-font (font-spec :family "Hack" :size 12)
-              doom-line-numbers-style 'relative)
+              doom-line-numbers-style 'relative
+              doom-themes-enable-bold t
+              doom-themes-enable-italic t)
 
 (when (eq system-type 'darwin)
   (setq-default mac-command-modifier 'meta
@@ -11,18 +13,6 @@
                 '(("http" . "192.168.1.254:8080")
                   ("https" . "192.168.1.254:8080")
                   ("ftp" . "192.168.1.254:8080"))))
-
-(when (eq system-type 'darwin)
-  (setq mac-command-modifier 'meta)
-  (setq mac-right-command-modifier 'none)
-  (setq-default url-using-proxy t
-                url-proxy-services
-                '(("http" . "192.168.1.254:8080")
-                  ("https" . "192.168.1.254:8080")
-                  ("ftp" . "192.168.1.254:8080"))))
-
-(setq-default doom-font (font-spec :family "Overpass Mono" :size 12))
-(setq-default doom-line-numbers-style 'relative)
 
 (doom! :feature
        (popup            ; tame sudden yet inevitable temporary windows
@@ -99,7 +89,9 @@
        (java +meghanada) ; the poster child for carpal tunnel syndrome
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
        julia             ; a better, faster MATLAB
-       latex             ; writing papers in Emacs has never been so fun
+       (latex
+        +skim
+        +latexmk)        ; writing papers in Emacs has never been so fun
        ledger            ; an accounting system in Emacs
        lua               ; one-based indices? one-based indices
        markdown          ; writing docs for people to ignore
